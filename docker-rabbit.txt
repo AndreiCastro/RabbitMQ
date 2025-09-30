@@ -1,0 +1,27 @@
+Img Docker.
+
+Como criar uma imagem rabbit no docker:
+
+	1º Abre o docker desktop e loga com sua conta.
+	
+	2º Vai ser redirecionado pra colocar login e senha via browser.
+	
+	3º Execute esse comando no terminal: docker run -d --hostname rmq --name rmq-server -p 15672:15672 -p 5672:5672 rabbitmq:3.12-management
+		PS: rmq-server sera o nome da imagem. (Pode add o que quiser)
+			As portas que iram usar podemos modificar portaPC:15672 e portaPC:5672 (padrão eu deixo a mesma)
+			rabbitmq:3.12-management O management dessa versão, é que tem a interface para podermos mexer no rabbit.
+	
+	4º Para verificar se esta ok va no docker desktop, vai ter uma imagem com o nome que criou (no caso acima rmq-server)	
+=====================================================================================================================================================================
+
+Abas RabbitMq.
+
+No RabbitMQ quando o seu projeto estiver sendo executado, no caso conectado com RabbitMQ irá exibir nas abas:
+	- Connections: Quantas conexões estão sendo rolando no RabbitMQ
+	- Exchanges: Tem 7 exchanges por padrão, e mais o sua fila e a model desta fila. (As duas por padrão vem type fanout).
+	- Queues and Streams: As filas que estão conectadas com o RabbitMQ.
+=====================================================================================================================================================================
+	
+Visualizar messagens.
+
+Para verificar se existe uma mensagem parada, vá até queue e na cooluna Unacked se estiver 1 pq tem uma mensagem parada.
