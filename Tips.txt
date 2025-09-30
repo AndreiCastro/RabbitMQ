@@ -1,0 +1,15 @@
+	NugetPackage: 
+		- AspNetCore.HealthChecks.Rabbitmq
+		- MassTransit.RabbitMQ
+		- MassTransit
+		- RabbitMQ.Client
+	
+	- O Mass Transit é um framework .NET para rotear os serviços de messageria, com do RabbitMQ.
+	
+	- O Producers é o projeto responsavel por enviar a mensagem pra fila de mensageria.
+	- O Consumers é o projeto responsavel por consumir as menssagem que estão na fila.
+	
+	
+	
+	
+docker run -d --hostname rabbit --name rabbitmq \ -p 5672:5672 -p 15672:15672 rabbitmq:3-management
