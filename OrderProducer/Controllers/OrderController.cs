@@ -4,7 +4,7 @@ using Shared.Model;
 using System;
 using System.Threading.Tasks;
 
-namespace OrderConsumer.Controllers
+namespace OrderProducer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -23,8 +23,13 @@ namespace OrderConsumer.Controllers
             if (ticket != null)
             {
                 ticket.Booked = DateTime.Now;
-                Uri uri = new Uri("rabbitmq://localhost/QueueOfName"); //Nome que ira aparecer no RabbitMq da filas
+                //Nome que ira aparecer no RabbitMq da filas
+                Uri uri = new Uri("rabbitmq://localhost/QueueOfName"); 
+
+                /*Resolve um ISendEndPoint que representa o destino (a fila).
+                MassTransit cria/resolve internamente como enviar para esse endereço*/
                 var endPoint = await _bus.GetSendEndpoint(uri);
+
                 await endPoint.Send(ticket);
                 return Ok();
             }

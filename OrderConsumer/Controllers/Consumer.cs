@@ -4,13 +4,13 @@ using Shared.Model;
 using System;
 using System.Threading.Tasks;
 
-namespace OrderConsumer.Consumer
+namespace OrderConsumer.Controllers
 {
-    public class TicketConsumer : IConsumer<Ticket>
+    public class Consumer : IConsumer<Ticket>
     {
-        private readonly ILogger<TicketConsumer> logger;
+        private readonly ILogger<Consumer> logger;
 
-        public TicketConsumer(ILogger<TicketConsumer> logger)
+        public Consumer(ILogger<Consumer> logger)
         {
             this.logger = logger;
         }

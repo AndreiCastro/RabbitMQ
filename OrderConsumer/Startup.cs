@@ -5,9 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using OrderConsumer.Consumer;
+using OrderConsumer.Controllers;
 using System;
-using Microsoft.Extensions.Configuration;
 
 namespace OrderConsumer
 {
@@ -26,7 +25,7 @@ namespace OrderConsumer
             //Add configuration of mensaggeria
             services.AddMassTransit(x =>
             {
-                x.AddConsumer<TicketConsumer>();
+                x.AddConsumer<Consumer>();
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
                 {
                     config.Host(new Uri("rabbitmq://localhost"), h =>
@@ -35,12 +34,17 @@ namespace OrderConsumer
                         h.Password("guest");
                     });
 
-                    //Queue of name que irá ser consumida
+                    /*Queue of name que irá ser consumida
+                     Configura uma receive endpoint usa a fila QueueOfName e define o comportamento de consumo dessa fila.
+                     */
                     config.ReceiveEndpoint("QueueOfName", ep =>
                     {
+                        //Define a qtde de mensagens que o RabbitMQ pode entregar antes de aguardar a confirmação.
                         ep.PrefetchCount = 10;
+
+                        //Se houver uma execeção, o MassTransit tenta novamente, 2 tentativas com intervalo de 100ms
                         ep.UseMessageRetry(r => r.Interval(2, 100));
-                        ep.ConfigureConsumer<TicketConsumer>(provider);
+                        ep.ConfigureConsumer<Consumer>(provider);
                     });
                 }));
             });

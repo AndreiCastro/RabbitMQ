@@ -25,8 +25,11 @@ namespace OrderProducer
             //Add configuration for messageria
             services.AddMassTransit(x =>
             {
+                /*Registra o MassTransit na DI container; x é o configurador
+                Esse bus é o objeto responsável por conectar ao RabbitMQ, enviar e receber mensagens*/
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
                 {
+                    //Cria/Configura o IBusControl usando o transporte RabbitMQ.
                     config.Host(new Uri("rabbitmq://localhost"), h =>
                     {
                         h.Username("guest");
